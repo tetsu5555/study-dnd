@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="srcarea" style="display: flex; width: 1200px; height: 250px; justify-content: space-between; align-items: center; border: 1px solid gray; margin-bottom: 20px;">
+        <div id="item1" class="item" draggable="true" style="width: 150px; height: 150px; background: red;">1</div>
+        <div id="item2" class="item" draggable="true" style="width: 150px; height: 150px; background: red;">2</div>
+        <div id="item3" class="item" draggable="true" style="width: 150px; height: 150px; background: red;">3</div>
+        <div id="item4" class="item" draggable="true" style="width: 150px; height: 150px; background: red;">4</div>
+        <div id="item5" class="item" draggable="true" style="width: 150px; height: 150px; background: red;">5</div>
+        <div id="item6" class="item" draggable="true" style="width: 150px; height: 150px; background: red;">6</div>
+    </div>
+    <div id="droparea" style="display: flex; width: 1200px; height: 250px; justify-content: space-between; align-items: center; border: 1px solid gray;"></div>
+</body>
+<script>
+    window.addEventListener("load", function(){
+        var els = document.querySelectorAll('#srcarea [class=item]');
+        for (var i = 0; i<els.length; i++) {
+            els[i].addEventListener('dragstart', function(evt) {
+                var elm = evt.target;
+                evt.dataTransfer.setData('Text', elm.id);
+                evt.stopPropagation();
+            }, false)
+        }
+
+        var droparea = document.getElementById('droparea');
+        droparea.addEventListener("dragenter", function(evt){
+            evt.preventDefault();
+        }, false);
+        droparea.addEventListener("dragover", function(evt){
+            evt.preventDefault();
+        }, false);
+        droparea.addEventListener("drop", function(evt){
+            var elm = evt.target;
+            var id = evt.dataTransfer.getData('Text');
+            var target = document.getElementById(id);
+            if(target){
+                droparea.appendChild(target);
+            }
+            evt.preventDefault();
+        }, false);
+
+    })();
+</script>
+</html>
